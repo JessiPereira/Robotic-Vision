@@ -1,5 +1,4 @@
 import cv2 as cv
-
 import json
 
 class TrackBarWindow:
@@ -71,19 +70,43 @@ class TrackBarWindow:
     def set_frame(self, frame):
         cv.imshow(self.window_detection_name, self.get_frame_threshold(frame))
 
+    #def get_frame_threshold(self, frame):
+    #    frame_HSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    #    return (cv.inRange(frame_HSV, (self.low_H, self.low_S, self.low_V), (self.high_H, self.high_S, self.high_V)))
 
-if __name__ == '__main__':
-    variavel = open("dadosc.txt")
+    #def set_frame(self, frame):
+    #    cv.imshow(self.window_detection_name, self.get_frame_threshold(frame))
+
+    #def get_frame_threshold(self, frame):
+    #    frame_HSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    #    return (cv.inRange(frame_HSV, (self.low_H, self.low_S, self.low_V), (self.high_H, self.high_S, self.high_V)))
+
+    #def set_frame(self, frame):
+    #    cv.imshow(self.window_detection_name, self.get_frame_threshold(frame))
+
+if __name__ == "__main__" :
+    variavel = open ("dadosc.txt")
     lines = variavel.readlines()
     string = lines[0].strip()
     biblio = json.loads(string)
     window_track = TrackBarWindow(biblio)
     cap = cv.VideoCapture(0)
-    while True:
-        ref, frame = cap.read()
-        if frame is None:
-            break
-        window_track.set_frame(frame)
-        key = cv.waitKey(30)
-        if key == ord('q') or key == 27:
-            break
+
+while True:
+    ref, frame = cap.read()
+    if frame is None:
+        break
+    #ref, frame2 = cap.read()
+    #if frame2 is None:
+    #    break
+    #ref, frame3 = cap.read()
+    #if frame3 is None:
+    #    break
+
+    window_track.set_frame(frame)
+    #window_track.set_frame(frame2)
+    #window_track.set_frame(frame3)
+
+    key = cv.waitKey(30)
+    if key == ord('q') or key == 27:
+        break
