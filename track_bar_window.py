@@ -85,7 +85,7 @@ class TrackBarWindow:
     #    cv.imshow(self.window_detection_name, self.get_frame_threshold(frame))
 
 if __name__ == "__main__" :
-    variavel = open ("dadosc.txt")
+    variavel = open ("dadosl.txt")
     lines = variavel.readlines()
     string = lines[0].strip()
     biblio = json.loads(string)

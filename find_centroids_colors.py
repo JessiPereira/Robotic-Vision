@@ -5,7 +5,7 @@ import cv2 as cv
 import json
 
 
-variavel = open("dadosc.txt")
+variavel = open("dadosl.txt")
 lines = variavel.readlines()
 string = lines[0].strip()
 biblio = json.loads(string)
@@ -33,26 +33,41 @@ while True:
     cX3, cY3 = color3.get_centroid(frame)
     frame_threshold3 = color3.get_frame_threshold(frame)
 
-    if(cX1 is not None and cY1 is not None):
-        cv.circle(frame_threshold1, (cX1, cY1), 5, (0, 0, 255), -1)
-        cv.putText(frame_threshold1, "centroid", (cX1 - 25, cY1 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
-        cv.imshow(window, frame_threshold1)
+    frame1 = cv.addWeighted(frame_threshold1, 1.0, frame_threshold1, 0.0, 0)
+    frame2 = cv.addWeighted(frame_threshold2, 1.0, frame1, 1.0, 0)
+    frame3 = cv.addWeighted(frame_threshold3, 1.0, frame2, 1.0, 0)
 
-        key = cv.waitKey(0)
+    def centroidhsv(cX, cY, threshold):
+        cv.circle(threshold, (cX, cY), 5, (0, 0, 255), -1)
+        cv.putText(threshold, "centroid", (cX - 25, cY - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+
+    if(cX1 is not None and cY1 is not None):
+        centroidhsv(cX1, cY1, frame3)
+
+        #cv.circle(frame_threshold1, (cX1, cY1), 5, (0, 0, 255), -1)
+        #cv.putText(frame_threshold1, "centroid", (cX1 - 25, cY1 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+        #cv.imshow(window, frame_threshold1)
+
+        #key = cv.waitKey(30)
         #key == ord('q') or key == 27:
 
     if(cX2 is not None and cY2 is not None):
-        cv.circle(frame_threshold2, (cX2, cY2), 5, (0, 0, 255), -1)
-        cv.putText(frame_threshold2, "centroid", (cX2 - 25, cY2 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
-        cv.imshow(window, frame_threshold2)
+        centroidhsv(cX2, cY2, frame3)
 
-        key = cv.waitKey(0)
+        #cv.circle(frame_threshold2, (cX2, cY2), 5, (0, 0, 255), -1)
+        #cv.putText(frame_threshold2, "centroid", (cX2 - 25, cY2 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+        #cv.imshow(window, frame_threshold2)
+
+        #key = cv.waitKey(30)
         #key == ord('q') or key == 27:
 
     if(cX3 is not None and cY3 is not None):
-        cv.circle(frame_threshold3, (cX3, cY3), 5, (0, 255, 255), -1)
-        cv.putText(frame_threshold3, "centroid", (cX3 - 25, cY3 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
-        cv.imshow(window, frame_threshold3)
+        centroidhsv(cX3, cY3, frame3)
 
-        key = cv.waitKey(0)
-        #key == ord('q') or key == 27:
+        #cv.circle(frame_threshold3, (cX3, cY3), 5, (0, 255, 255), -1)
+        #cv.putText(frame_threshold3, "centroid", (cX3 - 25, cY3 - 25), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 1)
+        #cv.imshow(window, frame_threshold3)
+
+        cv.imshow(window, frame3)
+        key = cv.waitKey(30)
+        key == ord('q') or key == 27
